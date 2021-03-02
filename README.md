@@ -58,7 +58,7 @@ gcc hello.c -o hello
 CC = gcc # variable CC
 
 main: main.c # main rely on main.c
-<TAB>$(CC) main.c -o main # compile, use variable CC
+  $(CC) main.c -o main # compile, use variable CC
 ```
 
 ### Symbols
@@ -67,12 +67,10 @@ main: main.c # main rely on main.c
 `?=` is the value after the sign if it has not been assigned;  
 `+=` is the value after adding the sign.
 
-## Compile Rules
-*The following `<TAB>` needs to be replaced with the tab key on the keyboard.*
-
+## Build Rules
 ```makefile
 target: dependencies
-<TAB>system command(s)
+  system command(s)
 ```
 
 * `target` could be an object file, executable file or just a target.
@@ -82,22 +80,22 @@ target: dependencies
 Example:
 ```makefile
 hello: hello.c
-<TAB>gcc hello.c -o hello
+  gcc hello.c -o hello
 ```
 
 And the example could be also described as follow:
 ```makefile
 hello: hello.o
-<TAB>gcc hello.o -o hello
+  gcc hello.o -o hello
 
 hello.o: hello.s
-<TAB>gcc -c hello.S -o hello.o
+  gcc -c hello.S -o hello.o
 
 hello.s: hello.i
-<TAB>gcc -S hello.i -o hello.s
+  gcc -S hello.i -o hello.s
 
 hello.i: hello.c
-<TAB>gcc -E hello.c -o hello.i
+  gcc -E hello.c -o hello.i
 ```
 The order of makefile does not affect the execution results, but for the readability, it is best to use the top-down order.
 
@@ -113,20 +111,20 @@ The `.PHONY` can define more than one target:
 .PHONY: clean install
 
 clean:
-<TAB>rm -rf *.o
+  rm -rf *.o
 
 install:
-<TAB>cp hello /usr/local/bin
+  cp hello /usr/local/bin
 ```
 
 ## Multi Build
 If you have two targets or more to build, you may try to write as follows:
 ```makefile
 main_a: main_a.c
-<TAB>gcc main_a.c -o main_a
+  gcc main_a.c -o main_a
 
 main_b: main_b.c
-<TAB>gcc main_b.c -o main_b
+  gcc main_b.c -o main_b
 ```
 This cannot help you compile two targets or more, if you check the built files, you won't see `main_b`. The reason is that makefile only processes the top one, and `main_a` doesn't rely on `main_b`, so `main_b` won't be built.
 
@@ -137,10 +135,10 @@ The solution is use `all:`, like follows:
 all: main_a main_b
 
 main_a: main_a.c
-<TAB>gcc main_a.c -o main_a
+  gcc main_a.c -o main_a
 
 main_b: main_b.c
-<TAB>gcc main_b.c -o main_b
+  gcc main_b.c -o main_b
 ```
 Now `all` become the top one, and it rely on `main_a` and `main_b`, so all targets will be built.
 
